@@ -1,79 +1,97 @@
-import React from 'react';
-
-import { nanoid } from 'nanoid';
-import css from './ContactForm.module.css';
-import { getIsLoading } from 'redux/selectors';
-import { addContact } from 'redux/operations';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { Box, TextField, Button, Typography } from '@mui/material';
 
-export const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+export default function ContactForm() {
+  const [contact, setContact] = useState({
+    name: '',
+    number: '',
+  });
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
+  const contacts = useSelector(getContacts);
 
-  const handleChange = event => {
-    const { name, value } = event.target;
-    if ('name' === name) {
-      setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
+  const handleInputChange = e => {
+    setContact(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const id = nanoid();
+    const queryMatch = contacts.find(
+      ({ name }) =>
+        contact.name && contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (queryMatch) {
+      alert(`"${contact.name}" is already in contacts.`);
+      return;
+    } else {
+      dispatch(addContact({ id, name: contact.name, number: contact.number }));
     }
-  };
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    if (!isLoading) {
-      dispatch(addContact({ name, number }));
-      reset();
-    }
+    setContact({
+      name: '',
+      number: '',
+    });
   };
-
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
-
-  const inputNameId = nanoid();
-  const inputTelId = nanoid();
 
   return (
-    <form className={css.form} onSubmit={handleSubmit}>
-      <label className={css.label_name} htmlFor={inputNameId}>
-        Name
-        <input
-          className={css.input}
-          id={inputNameId}
-          onChange={handleChange}
+    <>
+      <Typography
+        variant="h4"
+        sx={{
+          mt: 5,
+          mb: 3,
+          textAlign: 'center',
+          fontWeight: 700,
+        }}
+      >
+        Add contacts
+      </Typography>
+
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: '600px',
+          margin: '0 auto',
+        }}
+      >
+        <TextField
+          label="Name"
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-zА-Z]+(([' -][a-zA-Zа-zА-Z ])?[a-zA-Zа-zА-Z]*)*$"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          placeholder="Enter name"
-          value={name}
+          value={contact.name}
+          onChange={handleInputChange}
+          sx={{ marginBottom: '1rem' }}
         />
-      </label>
-      <label className={css.label_number} htmlFor={inputTelId}>
-        Number
-        <input
-          className={css.input}
-          id={inputTelId}
-          onChange={handleChange}
-          value={number}
+        <TextField
+          label="Number"
           type="tel"
           name="number"
-          placeholder="Enter phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
+          value={contact.number}
+          onChange={handleInputChange}
+          sx={{ marginBottom: '1rem' }}
         />
-      </label>
-      <button className={css.button} type="submit">
-        Add contact
-      </button>
-    </form>
+        <Button type="submit" variant="contained">
+          Add contact
+        </Button>
+      </Box>
+    </>
   );
+}
+
+ContactForm.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.string,
 };

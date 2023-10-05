@@ -1,49 +1,56 @@
-import React, { useEffect } from 'react';
-
-import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/operations';
+import { getIsLoading, getFilteredContacts } from 'redux/selectors';
+import PropTypes from 'prop-types';
 import {
-  getIsLoading,
-  getError,
-  getFilteredContacts,
-} from '../../redux/selectors';
-import { deleteContact, fetchContact } from 'redux/operations';
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  CircularProgress,
+} from '@mui/material';
 
-export const ContactList = () => {
+const ContactList = () => {
+  const dispatch = useDispatch();
   const contacts = useSelector(getFilteredContacts);
   const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContact());
-  }, [dispatch]);
-
-  const handleDeleteContact = id => {
-    dispatch(deleteContact(id));
-  };
   return (
-    <div className={css.container}>
-      {isLoading}
-      {!contacts?.length && !error && !isLoading && <p>No contacts found.</p>}
-
-      {error && <p>{error}</p>}
-      <ul className={css.contacts_list}>
-        {contacts.map(({ name, id, number }) => (
-          <li className={css.contact_item} key={id}>
-            <p className={css.value}>
-              {name}: {number}
-            </p>
-            <button
-              className={css.button_delete}
-              type="button"
-              onClick={() => handleDeleteContact(id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <List
+        sx={{
+          maxWidth: '600px',
+          mt: 10,
+          mx: 'auto',
+        }}
+      >
+        {isLoading && <CircularProgress />}
+        {!isLoading &&
+          contacts.map(({ id, name, number }) => (
+            <ListItem key={id}>
+              <ListItemText primary={`${name} : ${number}`} />
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => dispatch(deleteContact(id))}
+              >
+                Delete
+              </Button>
+            </ListItem>
+          ))}
+      </List>
+    </>
   );
 };
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+};
+
+export default ContactList;

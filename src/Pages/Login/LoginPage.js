@@ -1,7 +1,7 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from 'redux/Auth/operation';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/operations';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { getIsAuthenticated } from 'redux/selectors';
 
 function Copyright(props) {
   return (
@@ -25,7 +26,10 @@ function Copyright(props) {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link
+        color="inherit"
+        href="https://github.com/daniellesarau/goit-react-hw-08-phonebook"
+      >
         DanielaS.
       </Link>{' '}
       {new Date().getFullYear()}
@@ -37,21 +41,36 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const dispatch = useDispatch();
-  const handleSubmit = e => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    dispatch(
-      login({
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
-    form.reset();
+  const navigate = useNavigate();
+
+  const isAuth = useSelector(getIsAuthenticated);
+
+  const handleChangeInput = event => {
+    const { name, value } = event.target;
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
   };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    dispatch(login({ email: email, password: password }));
+  };
+
+  useEffect(() => {
+    if (isAuth) navigate('contacts');
+  }, [isAuth, navigate]);
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ marginTop: '150px ' }}>
         <CssBaseline />
         <Box
           sx={{
@@ -81,6 +100,7 @@ export default function Login() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={handleChangeInput}
               autoFocus
             />
             <TextField
@@ -91,6 +111,7 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
+              onChange={handleChangeInput}
               autoComplete="current-password"
             />
             <FormControlLabel

@@ -72,9 +72,11 @@ export const Register = () => {
             name="name"
             type="text"
             autoFocus
+            autoComplete="current-name"
             onChange={handleChangeInput}
           />
           <TextField
+            autoComplete="current-email"
             margin="normal"
             fullWidth
             label="Email Address"
@@ -84,6 +86,7 @@ export const Register = () => {
             onChange={handleChangeInput}
           />
           <TextField
+            autoComplete="current-password"
             margin="normal"
             fullWidth
             name="password"

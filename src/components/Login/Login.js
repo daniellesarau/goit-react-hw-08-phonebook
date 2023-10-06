@@ -89,6 +89,7 @@ export const Login = () => {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
+            autoComplete="current-email"
             margin="normal"
             fullWidth
             label="Email Address"
@@ -98,6 +99,7 @@ export const Login = () => {
             onChange={handleChangeInput}
           />
           <TextField
+            autoComplete="current-password"
             margin="normal"
             fullWidth
             name="password"

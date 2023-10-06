@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'redux/operations';
-
-import { Box, Button, Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { Box, Link, Typography } from '@mui/material';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 
 export const UserMenu = () => {
@@ -18,7 +18,9 @@ export const UserMenu = () => {
       >
         Welcome, {userName}!
       </Typography>
-      <Button
+      <Link
+        component={NavLink}
+        to="/home"
         variant="outlined"
         type="button"
         onClick={() => dispatch(logout())}
@@ -34,7 +36,7 @@ export const UserMenu = () => {
       >
         <ExitToAppOutlinedIcon sx={{ paddingTop: '7px' }} />
         Logout
-      </Button>
+      </Link>
     </Box>
   );
 };

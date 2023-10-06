@@ -12,7 +12,7 @@ export const UserNavigation = () => {
       <Box>
         <Link
           component={NavLink}
-          to="/"
+          to="/home"
           variant="h6"
           color={'#ffc300'}
           sx={{

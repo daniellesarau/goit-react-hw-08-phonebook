@@ -1,25 +1,37 @@
-import React from 'react';
-import css from './Filter.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from '../../redux/filterSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from 'redux/selectors';
+import { setFilter } from 'redux/filterSlice';
+import PropTypes from 'prop-types';
+import { Box, TextField } from '@mui/material';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(getFilter);
+  const filterValue = useSelector(getFilter);
+
+  const handleInputChange = e => {
+    dispatch(setFilter(e.target.value));
+  };
 
   return (
-    <div className={css.container}>
-      <label className={css.label} htmlFor="filter">
-        Find contact by name
-        <input
-          className={css.input}
-          type="text"
-          name="filter"
-          value={filter}
-          onChange={event => dispatch(setFilter(event.target.value.trim()))}
-        />
-      </label>
-    </div>
+    <Box
+      sx={{
+        maxWidth: '600px',
+        mt: 10,
+        mx: 'auto',
+      }}
+    >
+      <TextField
+        label="Find contacts by name"
+        type="text"
+        value={filterValue}
+        onChange={handleInputChange}
+        fullWidth
+      />
+    </Box>
   );
+};
+
+Filter.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };

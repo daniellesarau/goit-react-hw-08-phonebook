@@ -9,11 +9,6 @@ export const getRefresh = state => state.user.isRefresh;
 
 export const getUser = state => state.user.user;
 
-export const getUserName = createSelector(
-  [getUser],
-  user => user?.name || null
-);
-
 export const getFilteredContacts = createSelector(
   [getContacts, getFilter],
   (contacts, filter) => {

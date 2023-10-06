@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'redux/operations';
-import { getUserName } from 'redux/selectors';
+
 import { Box, Button, Typography } from '@mui/material';
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
-  const userName = useSelector(getUserName);
+  const userName = useSelector(state => state.user.name);
 
   return (
     <Box display="flex" alignItems="center">
@@ -31,6 +32,7 @@ export const UserMenu = () => {
           },
         }}
       >
+        <ExitToAppOutlinedIcon sx={{ paddingTop: '7px' }} />
         Logout
       </Button>
     </Box>

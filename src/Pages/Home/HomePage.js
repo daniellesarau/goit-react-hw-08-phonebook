@@ -2,10 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { Box, Link, Typography } from '@mui/material';
 import { getIsAuthenticated } from 'redux/selectors';
 import { useSelector } from 'react-redux';
-
-export default function Home() {
-  const isAuth = useSelector(getIsAuthenticated);
-
+export default function HomePage() {
+  const isLoggIn = useSelector(getIsAuthenticated);
   return (
     <>
       <Box sx={{ textAlign: 'center', marginTop: '200px' }}>
@@ -15,7 +13,7 @@ export default function Home() {
         </Typography>
         <Link
           component={NavLink}
-          to={isAuth ? '/contacts' : '/register'}
+          to={isLoggIn ? '/contacts' : '/login'}
           variant="h5"
           underline="none"
           sx={{

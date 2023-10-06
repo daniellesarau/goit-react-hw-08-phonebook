@@ -19,6 +19,7 @@ export default function ContactForm() {
   };
 
   const handleSubmit = e => {
+    const form = e.currentTarget;
     e.preventDefault();
     const id = nanoid();
     const queryMatch = contacts.find(
@@ -32,7 +33,7 @@ export default function ContactForm() {
     } else {
       dispatch(addContact({ id, name: contact.name, number: contact.number }));
     }
-
+    form.reset();
     setContact({
       name: '',
       number: '',

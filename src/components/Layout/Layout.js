@@ -1,76 +1,39 @@
-import React from 'react';
+import { AppBar, Container, LinearProgress, Toolbar, Box } from '@mui/material';
+import AuthNavigation from 'components/AuthNavigation/AuthNavihation';
+import { UserNavigation } from 'components/UserNavigation/UserNavigation';
+import { UserMenu } from 'components/UserMenu/UserMenu';
 import { Suspense } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import '@fontsource/roboto/500.css';
-import { NavLink } from 'react-router-dom';
-import {
-  Link,
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  LinearProgress,
-} from '@mui/material';
+import { getIsAuthenticated } from 'redux/selectors';
 
-export default function Layout() {
+const Layout = () => {
+  const isLoggedIn = useSelector(getIsAuthenticated);
+
   return (
-    <Box>
-      <AppBar>
-        <Toolbar variant="dense">
-          <Button variant="contained" sx={{ marginRight: 'auto ' }}>
-            <Link
-              sx={{ color: 'white' }}
-              underline="none"
-              component={NavLink}
-              to="/home"
-            >
-              Home
-            </Link>
-          </Button>
-          <Typography
-            variant="h3"
-            gutterBottom
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: '5px',
-              marginLeft: '80px',
-            }}
-          >
-            Phonebook
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              marginLeft: 'auto ',
-              justifyContent: 'space-around',
-            }}
-          >
-            <Button variant="contained">
-              <Link
-                sx={{ color: 'white' }}
-                underline="none"
-                component={NavLink}
-                to="/register"
-              >
-                Register
-              </Link>
-            </Button>
-            <Button variant="contained" sx={{ marginLeft: '30px' }}>
-              <Link
-                sx={{ color: 'white' }}
-                underline="none"
-                component={NavLink}
-                to="/login"
-              >
-                Login
-              </Link>
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
+    <Box sx={{ minWidth: '1485px' }}>
+      <AppBar
+        position="static"
+        sx={{
+          height: 80,
 
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Container fixed>
+          <Toolbar
+            variant="dense"
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <UserNavigation />
+            {isLoggedIn ? <UserMenu /> : <AuthNavigation />}
+          </Toolbar>
+        </Container>
+      </AppBar>
       <main>
         <Suspense fallback={<LinearProgress variant="indeterminate" />}>
           <Outlet />
@@ -78,4 +41,6 @@ export default function Layout() {
       </main>
     </Box>
   );
-}
+};
+
+export default Layout;

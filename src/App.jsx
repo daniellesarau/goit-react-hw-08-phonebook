@@ -11,11 +11,11 @@ const Register = lazy(() => import('./Pages/Register/RegisterPage'));
 const Contacts = lazy(() => import('./Pages/Contacts/ContactsPage'));
 
 export const App = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(refreshUser());
+  // }, [dispatch]);
 
   return (
     <Routes>
@@ -23,12 +23,9 @@ export const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/contacts"
-          element={
-            <PrivateRoute redirectTo="/login" component={<Contacts />} />
-          }
-        />
+        <Route element={<PrivateRoute />}>
+          <Route path="/contacts" element={<Contacts />} />
+        </Route>
       </Route>
     </Routes>
   );

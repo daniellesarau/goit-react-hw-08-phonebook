@@ -127,8 +127,8 @@ export const refreshUser = createAsyncThunk(
     try {
       const currState = thunkAPI.getState();
       const userId = currState.user.user.uid;
-
-      const updatedUserData = await updateDoc(userId);
+      const userDocRef = doc(db, 'users', userId);
+      const updatedUserData = await updateDoc(userDocRef, userId);
 
       return updatedUserData;
     } catch (error) {

@@ -39,9 +39,11 @@ export const Register = () => {
   const handleSubmit = event => {
     event.preventDefault();
     dispatch(register({ email: email, password: password, name: name }));
+    // navigate('/contacts');
   };
 
   useEffect(() => {
+    // console.log('useEffect triggered');
     if (isAuth) navigate('/contacts');
   }, [isAuth, navigate]);
 

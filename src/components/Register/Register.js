@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Copyright, { defaultTheme } from '../Login/Login';
 import { register } from 'redux/operations';
 import { useState } from 'react';
+
 import { getIsAuthenticated } from 'redux/selectors';
 
 export const Register = () => {
@@ -39,11 +40,9 @@ export const Register = () => {
   const handleSubmit = event => {
     event.preventDefault();
     dispatch(register({ email: email, password: password, name: name }));
-    // navigate('/contacts');
   };
 
   useEffect(() => {
-    // console.log('useEffect triggered');
     if (isAuth) navigate('/contacts');
   }, [isAuth, navigate]);
 

@@ -51,13 +51,13 @@ export const addContact = createAsyncThunk(
     try {
       const currState = thunkAPI.getState();
       const userId = currState.user.user.uid;
-
+      // console.log(userId);
       const userDocRef = doc(db, 'users', userId);
       const contactsCollectionRef = collection(userDocRef, 'contacts');
-      const docRef = await addDoc(contactsCollectionRef, { name: contact });
+      // const docRef = await addDoc(contactsCollectionRef, { name: contact });
+      const docRef = await addDoc(contactsCollectionRef, { ...contact });
       const addedData = (await getDoc(docRef)).data();
-      console.log(addedData);
-
+      console.log({ id: docRef.id, ...addedData });
       return { id: docRef.id, ...addedData };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -91,7 +91,6 @@ export const register = createAsyncThunk(
         user.email,
         user.password
       );
-      console.log(response.user);
       return response.user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -106,7 +105,7 @@ export const login = createAsyncThunk('user/login', async (user, thunkAPI) => {
       user.email,
       user.password
     );
-    console.log(response.user);
+
     return response.user;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -127,8 +126,9 @@ export const refreshUser = createAsyncThunk(
     try {
       const currState = thunkAPI.getState();
       const userId = currState.user.user.uid;
-      const userDocRef = doc(db, 'users', userId);
-      const updatedUserData = await updateDoc(userDocRef, userId);
+      // const userDocRef = doc(db, "users, userId");
+      // const updatedUserData = await updateDoc(userDocRef, userId)
+      const updatedUserData = await updateDoc(userId);
 
       return updatedUserData;
     } catch (error) {

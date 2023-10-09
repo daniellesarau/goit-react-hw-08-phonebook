@@ -27,7 +27,7 @@ const userSlice = createSlice({
     },
     [login.fulfilled](state, action) {
       state.user = action.payload;
-      state.isAuthenticated = true;
+      state.isAuthentificated = true;
       state.isLoading = false;
       state.error = null;
     },
@@ -41,7 +41,7 @@ const userSlice = createSlice({
     },
     [logout.fulfilled](state, action) {
       state.user = null;
-      state.isAuthenticated = false;
+      state.isAuthentificated = false;
       state.isLoading = false;
       state.error = null;
     },

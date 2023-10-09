@@ -26,7 +26,7 @@ const ContactList = () => {
       >
         {isLoading && <CircularProgress />}
         {!isLoading &&
-          contacts.map(({ id, name, number }) => (
+          contacts?.map(({ id, name, number }) => (
             <ListItem key={id}>
               <ListItemText primary={`${name} : ${number}`} />
               <Button

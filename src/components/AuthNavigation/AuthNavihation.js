@@ -6,7 +6,13 @@ import { NavLink } from 'react-router-dom';
 export default function AuthNav() {
   return (
     <>
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
         <Link
           component={NavLink}
           to="/register"
@@ -22,7 +28,13 @@ export default function AuthNav() {
             },
           }}
         >
-          <LockOpenSharpIcon sx={{ paddingTop: '7px' }} /> REGISTER
+          <LockOpenSharpIcon
+            sx={{
+              paddingTop: '5px',
+              paddingRight: '5px',
+            }}
+          />{' '}
+          REGISTER
         </Link>
 
         <Link
@@ -35,12 +47,18 @@ export default function AuthNav() {
             fontWeight: 700,
             textDecoration: 'none',
             color: '#ffffff',
+            alignContent: 'center',
             '&:hover': {
               color: 'rgb(192,215,221)',
             },
           }}
         >
-          <LoginIcon sx={{ paddingTop: '7px' }} />
+          <LoginIcon
+            sx={{
+              paddingTop: '5px',
+              paddingRight: '5px',
+            }}
+          />
           LOGIN
         </Link>
       </Box>

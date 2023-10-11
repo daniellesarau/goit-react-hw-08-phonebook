@@ -1,41 +1,38 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from 'redux/operations';
 import { NavLink } from 'react-router-dom';
-import { Box, Link, Typography } from '@mui/material';
-import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import { Box, Link } from '@mui/material';
+
+import { BiExit } from 'react-icons/bi';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
-  const userName = useSelector(state => state.user.name);
 
   return (
     <Box display="flex" alignItems="center">
-      <Typography
-        variant="h6"
-        sx={{
-          marginRight: '1rem',
-        }}
-      >
-        Welcome, {userName}!
-      </Typography>
       <Link
         component={NavLink}
-        to="/home"
-        variant="outlined"
+        to="/"
+        variant="h6"
         type="button"
         onClick={() => dispatch(logout())}
+        color={'#ffc300'}
         sx={{
-          color: 'primary',
-          backgroundColor: '#ffffff',
+          padding: 1,
+          fontWeight: 700,
+          textDecoration: 'none',
+          color: '#ffffff',
+
           '&:hover': {
-            backgroundColor: 'primary',
-            color: '#ffffff',
-            border: 1,
+            color: 'rgb(192,215,221)',
           },
+          display: 'flex',
+          alignItems: 'center',
+          textAlign: 'center',
         }}
       >
-        <ExitToAppOutlinedIcon sx={{ paddingTop: '7px' }} />
-        Logout
+        LOGOUT
+        <BiExit sx={{ marginLeft: '0.5rem' }} />
       </Link>
     </Box>
   );

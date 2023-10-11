@@ -16,8 +16,9 @@ export const Filter = () => {
     <Box
       sx={{
         maxWidth: '600px',
-        mt: 10,
+        mt: 6,
         mx: 'auto',
+        padding: '0 16px',
       }}
     >
       <TextField
@@ -26,6 +27,12 @@ export const Filter = () => {
         value={filterValue}
         onChange={handleInputChange}
         fullWidth
+        variant="outlined"
+        sx={{
+          '& .MuiInputLabel-root': {
+            color: '#1976d2',
+          },
+        }}
       />
     </Box>
   );

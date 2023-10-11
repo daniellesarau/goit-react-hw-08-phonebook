@@ -7,9 +7,7 @@ import {
   Box,
   CssBaseline,
   TextField,
-  ThemeProvider,
   Typography,
-  createTheme,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { login } from 'redux/operations';
@@ -24,21 +22,19 @@ export default function Copyright(props) {
       color="text.secondary"
       align="center"
       {...props}
+      sx={{ paddingTop: ' 200px' }}
     >
       {'Copyright © '}
       <Link
         color="inherit"
         href="https://github.com/daniellesarau/goit-react-hw-08-phonebook"
       >
-        Daniela S.
+        Daniela S
       </Link>{' '}
       {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 }
-
-export const defaultTheme = createTheme();
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -68,7 +64,7 @@ export const Login = () => {
   }, [isAuth, navigate]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <>
       <CssBaseline />
 
       <Box
@@ -79,6 +75,7 @@ export const Login = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          padding: '0 20px',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -87,7 +84,12 @@ export const Login = () => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{ mt: 1, width: '100%' }}
+        >
           <TextField
             autoComplete="current-email"
             margin="normal"
@@ -111,13 +113,16 @@ export const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{
+              mt: 3,
+              mb: 2,
+            }}
           >
             Login
           </Button>
           <Copyright sx={{ mt: 5 }} />
         </Box>
       </Box>
-    </ThemeProvider>
+    </>
   );
 };

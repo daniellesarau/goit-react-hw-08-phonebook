@@ -7,15 +7,36 @@ import {
   Box,
   CssBaseline,
   TextField,
-  ThemeProvider,
   Typography,
+  Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Copyright, { defaultTheme } from '../Login/Login';
+
 import { register } from 'redux/operations';
 import { useState } from 'react';
 
 import { getIsAuthenticated } from 'redux/selectors';
+
+export default function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+      sx={{ paddingTop: ' 130px' }}
+    >
+      {'Copyright © '}
+      <Link
+        color="inherit"
+        href="https://github.com/daniellesarau/goit-react-hw-08-phonebook"
+      >
+        Daniela S
+      </Link>{' '}
+      {new Date().getFullYear()}
+    </Typography>
+  );
+}
 
 export const Register = () => {
   const [email, setEmail] = useState('');
@@ -47,7 +68,7 @@ export const Register = () => {
   }, [isAuth, navigate]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <>
       <CssBaseline />
       <Box
         sx={{
@@ -57,6 +78,7 @@ export const Register = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          padding: '0 20px',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -65,7 +87,12 @@ export const Register = () => {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{ mt: 1, width: '100%' }}
+        >
           <TextField
             margin="normal"
             fullWidth
@@ -106,6 +133,6 @@ export const Register = () => {
           <Copyright sx={{ mt: 5 }} />
         </Box>
       </Box>
-    </ThemeProvider>
+    </>
   );
 };

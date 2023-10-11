@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from 'axios';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,8 +16,6 @@ import {
 } from 'firebase/firestore';
 import { auth } from './firebase';
 import { db } from './firebase';
-
-// axios.defaults.baseURL = 'https://65080fd956db83a34d9bad39.mockapi.io';
 
 export const fetchContact = createAsyncThunk(
   'contacts/fetchContacts',
@@ -54,7 +51,6 @@ export const addContact = createAsyncThunk(
       // console.log(userId);
       const userDocRef = doc(db, 'users', userId);
       const contactsCollectionRef = collection(userDocRef, 'contacts');
-      // const docRef = await addDoc(contactsCollectionRef, { name: contact });
       const docRef = await addDoc(contactsCollectionRef, { ...contact });
       const addedData = (await getDoc(docRef)).data();
       console.log({ id: docRef.id, ...addedData });
@@ -126,10 +122,7 @@ export const refreshUser = createAsyncThunk(
     try {
       const currState = thunkAPI.getState();
       const userId = currState.user.user.uid;
-      // const userDocRef = doc(db, "users, userId");
-      // const updatedUserData = await updateDoc(userDocRef, userId)
       const updatedUserData = await updateDoc(userId);
-
       return updatedUserData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

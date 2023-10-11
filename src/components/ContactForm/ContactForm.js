@@ -62,6 +62,7 @@ export default function ContactForm() {
           flexDirection: 'column',
           maxWidth: '600px',
           margin: '0 auto',
+          padding: '0 16px',
         }}
       >
         <TextField
@@ -73,6 +74,7 @@ export default function ContactForm() {
           value={contact.name}
           onChange={handleInputChange}
           sx={{ marginBottom: '1rem' }}
+          fullWidth
         />
         <TextField
           label="Number"
@@ -83,8 +85,9 @@ export default function ContactForm() {
           value={contact.number}
           onChange={handleInputChange}
           sx={{ marginBottom: '1rem' }}
+          fullWidth
         />
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" fullWidth>
           Add contact
         </Button>
       </Box>

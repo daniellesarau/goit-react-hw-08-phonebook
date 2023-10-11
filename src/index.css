@@ -7,6 +7,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  height: max-content;
+  background: #f4f4f4;
+  background: -webkit-radial-gradient(circle, #f4f4f4 0%, #99b6e3 100%);
+  background: radial-gradient(circle, #f4f4f4 0%, #99b6e3 100%);
 }
 
 code {

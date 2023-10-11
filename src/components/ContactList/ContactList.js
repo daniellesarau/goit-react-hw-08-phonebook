@@ -20,19 +20,29 @@ const ContactList = () => {
       <List
         sx={{
           maxWidth: '600px',
-          mt: 10,
+          mt: 4,
           mx: 'auto',
         }}
       >
         {isLoading && <CircularProgress />}
         {!isLoading &&
-          contacts?.map(({ id, name, number }) => (
-            <ListItem key={id}>
-              <ListItemText primary={`${name} : ${number}`} />
+          contacts?.map(({ id, name, number }, index) => (
+            <ListItem
+              key={id}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <ListItemText
+                primary={`${index + 1}. ${name} : ${number}`}
+                sx={{ flex: '1' }}
+              />
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 onClick={() => dispatch(deleteContact(id))}
+                sx={{ ml: 2 }}
               >
                 Delete
               </Button>

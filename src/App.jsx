@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import { PrivateRoute } from 'Routes/PrivateRoute';
 import { refreshUser } from 'redux/operations';
+import NotFoundPage from 'Pages/NotFound/NotFoundPage';
 
 const Home = lazy(() => import('./Pages/Home/HomePage'));
 const Login = lazy(() => import('./Pages/Login/LoginPage'));
@@ -28,6 +29,7 @@ export const App = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/contacts" element={<Contacts />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </>

@@ -81,7 +81,7 @@ export const Register = () => {
           padding: '0 20px',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
